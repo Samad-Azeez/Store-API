@@ -1,6 +1,9 @@
 import { mongoose } from "mongoose";
 
 const productSchema = new mongoose.Schema({
+    image: {
+        type: String,
+    },
     name: {
         type: String,
         required: [true, 'Please enter product name'],
@@ -10,8 +13,13 @@ const productSchema = new mongoose.Schema({
         type: Number,
         required: [true, 'Please enter product price'],
     },
-    image: {
+    featured: {
+        type: Boolean,
+        default: false,
+    },
+    company: {
         type: String,
+        required: [true, 'Please enter product company'],
     },
     brand: {
         type: String,
@@ -37,3 +45,6 @@ const productSchema = new mongoose.Schema({
 }, {
     timestamps: true,
 });
+
+// Create a Mongoose model for the 'Product' collection using the defined productSchema
+export const product_model = mongoose.model('Product', productSchema);
