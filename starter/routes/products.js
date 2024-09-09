@@ -1,7 +1,10 @@
 import express from "express";
+import { getAllProducts, getAllProductsStatic } from "../controllers/products.js";
 
 export const products = express.Router();
 
-products.get("/", (req, res) => {
-    res.json({ message: "Products route" });
-});
+products.route('/')
+.get(getAllProducts);
+
+products.route('/static')
+.get(getAllProductsStatic);

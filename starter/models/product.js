@@ -17,30 +17,34 @@ const productSchema = new mongoose.Schema({
         type: Boolean,
         default: false,
     },
+    rating: {
+        type: Number,
+        required: true,
+        default: 3.0,
+    },
     company: {
         type: String,
+
+        // The enum option restricts the values of this field to specific allowed values
+        enum: { 
+            // The array of valid company names
+            values: ['ikea', 'liddy', 'marcos', 'caressa'],
+            // Custom error message when a value outside the enum is provided
+            message: '{VALUE} is not supported',
+        },
+        
         required: [true, 'Please enter product company'],
-    },
-    brand: {
-        type: String,
-    },
-    category: {
-        type: String,
     },
     countInStock: {
         type: Number,
         required: [true, 'Please enter product stock'],
+        default: 0,
     },
     description: {
         type: String,
     },
-    rating: {
-        type: Number,
-        required: true,
-    },
-    numReviews: {
-        type: Number,
-        required: true,
+    category: {
+        type: String,
     },
 }, { // Add timestamps to the schema to track creation and update times
     timestamps: true,
