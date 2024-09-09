@@ -42,7 +42,7 @@ const productSchema = new mongoose.Schema({
         type: Number,
         required: true,
     },
-}, {
+}, { // Add timestamps to the schema to track creation and update times
     timestamps: true,
 });
 
