@@ -1,6 +1,6 @@
 import 'dotenv/config'; // Load environment variables from .env into process.env
 import { connectDB } from './db/connect.js'; 
-import { product_model } from './models/pproduct.sjs'; // Import Product model
+import { product_model } from './models/Product.js' // Import Product model
 import jsonProducts from './products.json' assert { type: 'json' }; // Import products data from JSON file
 
 // Asynchronous function to populate the database with products
