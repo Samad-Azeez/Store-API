@@ -30,15 +30,19 @@ export const getAllProducts = async (req, res) => {
   }
 
   // Log the query object to the console
-  console.log(queryObject);
+  // console.log(queryObject);
 
   // If the sort query parameter is provided, sort the products accordingly
   let result = product_model.find(queryObject); // Get all products
-  if (sort) {
-    products = products.sort();
-  }
-  const products = await result;
 
+  if (sort) {
+    const sortList = sort.split(',').join(' '); // Handle comma-separated sort fields like 'name,price'
+    result = result.sort(sortList);
+  } else {
+    result = result.sort('createdAt'); // Sort by creation date if no sort query parameter is provided
+  }
+
+  const products = await result; //Execute the query and await the result
   const nbHits = products.length; // Get the number of products returned
   res.status(200).json({ products, nbHits });
 };
