@@ -2,7 +2,11 @@ import { product_model } from '../models/product.js';
 
 // Get all products with the featured field set to true stically
 export const getAllProductsStatic = async (req, res) => {
-  const products = await product_model.find({}).select('name price'); // Get all products with the featured field set to true
+  const products = await product_model
+    .find({ price: { $gt: 30 } })
+    .select('name price')
+    .sort('price')
+    .limit(4); // Get all products with the featured field set to true
   const nbHits = products.length; // Get the number of products returned
   res.status(200).json({ products, nbHits }); // Send the products and the number of hits
 };
@@ -47,6 +51,12 @@ export const getAllProducts = async (req, res) => {
     const fieldsList = fields.split(',').join(' '); // Handle comma-separated fields like 'name,price'
     result = result.select(fieldsList); // Select only the specified fields
   }
+
+  const page = Number(req.query.page) || 1;
+  const limit = Number(req.query.limit) || 10;
+  const skip = (page - 1) * limit;
+
+  result = result.skip(skip).limit(limit);
 
   const products = await result; //Execute the query and await the result
   const nbHits = products.length; // Get the number of products returned
